@@ -6,6 +6,9 @@ declare module 'styled-components' {
       body: string;
       header: string;
       footer: string;
+      form: string;
+      inputBorder: string;
+      inputBorderFocus: string;
     };
     mobile: string;
   }

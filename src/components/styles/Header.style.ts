@@ -10,7 +10,15 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   margin--bottom: 1rem;
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    flex-direction: column;
+  }
 `;
 
 export const Logo = styled.img`
+  width: 100px;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 50px;
+  }
 `;

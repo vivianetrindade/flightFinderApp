@@ -8,7 +8,7 @@ function Header() {
     <StyledHeader>
       <Container>
         <Nav>
-          <Logo src='.images/logo.svg' alt=''/>
+          <Logo src='./images/logo.png' alt=''/>
           <h1>Flight Finder App</h1>
         </Nav>
       </Container>
