@@ -1,0 +1,6 @@
+{
+  "extends": ["salt", "salt/react", "salt/react/hooks"],
+  "rules": {
+    // Overrides here
+  }
+}
