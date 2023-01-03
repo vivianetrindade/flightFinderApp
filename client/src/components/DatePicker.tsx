@@ -8,18 +8,20 @@ interface DatePickerProps {
   className?: string;
   title: string;
   date: Date;
+  name: string;
   onChange: (date: Date, name: string) => void;
 }
 
-function DatePickerComponent({ className, title, onChange, date }: DatePickerProps) {
+function DatePickerComponent({ className, title, onChange, date, name }: DatePickerProps) {
   
   return (
     <Flex direction= 'row' className={className}>
       <h2>{title}</h2>
       <div>
-        <DatePicker 
+        <DatePicker
+        name={name}
         selected={date}
-        onChange={(date: Date)=> onChange(date, title)}
+        onChange={(date: Date)=> onChange(date, name)}
         dateFormat='yyyy/MM/dd'
         />
       </div>
