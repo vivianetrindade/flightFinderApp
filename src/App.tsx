@@ -12,6 +12,7 @@ const theme = {
     form: '#ffefeb',
     inputBorder: '#ccc',
     inputBorderFocus: '#fff',
+    button: '#ebfbff',
   },
   mobile: '768px',
 };

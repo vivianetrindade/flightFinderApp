@@ -79,6 +79,7 @@ export const StyledSelectInput = styled(SelectInput)`
 
 
 export const StyledDatePicker = styled(DatePickerComponent)`
+  margin: 0.5rem 0.5rem;
   h2 {
     font-size: 1rem;
     margin: 0.5rem 0;
@@ -97,6 +98,23 @@ export const StyledDatePicker = styled(DatePickerComponent)`
     &:focus {
       border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
     }
+`;
+
+export const StyledButton = styled.button`
+  margin: 0.5rem 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: ${({ theme }) => theme.colors.button};
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
 `;
 
   

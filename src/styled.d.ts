@@ -9,6 +9,7 @@ declare module 'styled-components' {
       form: string;
       inputBorder: string;
       inputBorderFocus: string;
+      button: string;
     };
     mobile: string;
   }

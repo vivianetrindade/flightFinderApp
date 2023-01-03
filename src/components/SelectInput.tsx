@@ -6,17 +6,22 @@ interface SelectInputProps {
   name: string;
   id: string;
   label: string;
+  options: {
+    value: string,
+    label: string,
+  }[];
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-function SelectInput({ className, name, id, label }: SelectInputProps) {
+function SelectInput({ className, name, id, label, options, onChange }: SelectInputProps) {
   return (
     <Flex direction='row' className={className}>
       <label htmlFor={id}>{label}</label>
-      <select name={name} id={id}>
+      <select name={name} id={id} onChange={onChange}>
         <option value=''>--Please choose an option--</option>
-        <option value="LAX">Los Angeles</option>
-        <option value="SFO">San Francisco</option>
-        <option value="NYC">New York</option>
+        {options.map(option => (
+        <option value={option.value}>{option.label}</option>
+        ))}
       </select>
     </Flex>
   )

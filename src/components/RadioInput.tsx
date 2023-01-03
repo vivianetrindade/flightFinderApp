@@ -8,13 +8,14 @@ interface RadioInputProps {
   value: string;
   label: string;
   type: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function RadioInput({ className, id, name, value, label, type }: RadioInputProps) {
+function RadioInput({ className, id, name, value, label, type, onChange }: RadioInputProps) {
   return (
     <Flex direction='row' className={className}>
       <label htmlFor={id}>{label}</label>
-      <input type={type} id={id} name={name} value={value} />
+      <input type={type} id={id} name={name} value={value} onChange={onChange}/>
     </Flex>
   )
 }

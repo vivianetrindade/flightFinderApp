@@ -7,7 +7,7 @@ export const Flex = styled.div<{ direction?: string }>`
   
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: ${({ direction }) => direction || 'column'};
-    justify-content: space-between;
-    align-items: stretch;
+    align-items: baseline;
+    justify-content: space-evenly;
   }
 `

@@ -7,17 +7,20 @@ import "react-datepicker/dist/react-datepicker.css";
 interface DatePickerProps {
   className?: string;
   title: string;
+  date: Date;
+  onChange: (date: Date, name: string) => void;
 }
 
-function DatePickerComponent({ className, title }: DatePickerProps) {
-  const [startDate, setStartDate] = useState<Date>(new Date());
+function DatePickerComponent({ className, title, onChange, date }: DatePickerProps) {
+  
   return (
     <Flex direction= 'row' className={className}>
       <h2>{title}</h2>
       <div>
         <DatePicker 
-        selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
+        selected={date}
+        onChange={(date: Date)=> onChange(date, title)}
+        dateFormat='yyyy/MM/dd'
         />
       </div>
     </Flex>
