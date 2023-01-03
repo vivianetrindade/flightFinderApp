@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import RadioInput from "../RadioInput";
+import SelectInput from "../SelectInput";
+import DatePickerComponent from "../DatePicker";
 
 export const StyledForm = styled.form`
   display: flex;
@@ -20,23 +23,80 @@ export const StyledForm = styled.form`
   }
 `;
 
-export const StyledLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  margin: 0.5rem 0;
-  font-size: 1rem;
-`;
-
-export const StyledInput = styled.input`
-  padding: 0.5rem;
+export const StyledRadioInput = styled(RadioInput)`
   margin: 0.5rem 0.5rem;
-  border: 1px solid ${({ theme }) => theme.colors.inputBorder};
-  border-radius: 5px;
-  outline: none;
-  font-size: 1rem;
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  input {
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem;
+    border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
+    }
+  }
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    align-items: space-between;
   }
 `;
+
+export const StyledSelectInput = styled(SelectInput)`
+  margin: 0.5rem 0.5rem;
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  select {
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem;
+    border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
+    }
+    background-color: #fff;
+  }
+  option {
+    font-size: 1rem;
+    background-color: #fff;
+`;
+
+
+
+export const StyledDatePicker = styled(DatePickerComponent)`
+  h2 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    font-weight: 400;
+  }
+  div {
+    margin: 0 0.3rem;
+  }
+  input {
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem;
+    border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
+    }
+`;
+
+  
