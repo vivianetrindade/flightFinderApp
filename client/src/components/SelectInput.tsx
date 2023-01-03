@@ -19,8 +19,8 @@ function SelectInput({ className, name, id, label, options, onChange }: SelectIn
       <label htmlFor={id}>{label}</label>
       <select name={name} id={id} onChange={onChange}>
         <option value=''>--Please choose an option--</option>
-        {options.map(option => (
-        <option value={option.value}>{option.label}</option>
+        {options.map((option, index) => (
+        <option key={index} value={option.value}>{option.label}</option>
         ))}
       </select>
     </Flex>
