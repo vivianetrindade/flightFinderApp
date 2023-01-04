@@ -22,10 +22,14 @@ function Form() {
   }
 
   const handleDateChanges = (date: Date, name: string) => {
+    
     setFlightDetails({...flightDetails, [name]: date})
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    flightDetails.departureDate = flightDetails.departureDate.toISOString().split('T')[0];
+    flightDetails.returnDate = flightDetails.returnDate.toISOString().split('T')[0];
+    console.log(flightDetails)
     getFligts(flightDetails);
   }
 

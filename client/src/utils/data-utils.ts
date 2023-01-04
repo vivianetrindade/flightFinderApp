@@ -12,7 +12,7 @@ interface FlightDetails {
 
 
 export const getFligts = async (flightDetails: FlightDetails) => {
-  console.log(flightDetails, 'in data utils', flightDetails.departureDate!.toJSON());
+  console.log(flightDetails, 'in data utils', flightDetails.departureDate);
   const response = await axios.get(`http://localhost:8000/`, {
     params: flightDetails,
     });

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 // import { CalendarContainer } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import DatePicker from 'react-datepicker';

@@ -18,20 +18,20 @@ app.use(cors());
 app.get('/', (req: Request, res: Response) => {
   const flightDetails = req.query;
   console.log(flightDetails, 'in server', flightDetails.departureDate);
-  // amadeus.shopping.flightOffersSearch.get({
-  //   originLocationCode: flightDetails.originLocationCode,
-  //   destinationLocationCode: flightDetails.destinationLocationCode,
-  //   departureDate: '2023-01-11',
-  //   returnDate: '2023-01-18',
-  //   adults: flightDetails.adults,
-  //   children: flightDetails.children,
-  //   travelClass: flightDetails.travelClass,
-  // }).then(function (response: any) {
-  //   res.send(response.data);
-  // }).catch(function (responseError: any) {
-  //   console.log(responseError.code);
-  // }
-  // );
+  amadeus.shopping.flightOffersSearch.get({
+    originLocationCode: flightDetails.originLocationCode,
+    destinationLocationCode: flightDetails.destinationLocationCode,
+    departureDate: flightDetails.departureDate,
+    returnDate: flightDetails.returnDate,
+    adults: flightDetails.adults,
+    children: flightDetails.children,
+    travelClass: flightDetails.travelClass,
+  }).then(function (response: any) {
+    res.send(response.data);
+  }).catch(function (responseError: any) {
+    console.log('Error', responseError.code);
+  }
+  );
 });
 
 const port = process.env.PORT || 8000;
