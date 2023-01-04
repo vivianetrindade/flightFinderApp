@@ -1,7 +1,34 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
+
 const Amadeus = require('amadeus');
+
+interface IsoDate {
+  toISOString(): TDateISO;
+}
+
+type TYear         = `${number}${number}${number}${number}`;
+type TMonth        = `${number}${number}`;
+type TDay          = `${number}${number}`;
+type THours        = `${number}${number}`;
+type TMinutes      = `${number}${number}`;
+type TSeconds      = `${number}${number}`;
+type TMilliseconds = `${number}${number}${number}`;
+type TDateISODate = `${TYear}-${TMonth}-${TDay}`;
+type TDateISOTime = `${THours}:${TMinutes}:${TSeconds}.${TMilliseconds}`;
+type TDateISO = `${TDateISODate}T${TDateISOTime}Z`;
+
+interface FlightReceived {
+  originLocationCode: string;
+  destinationLocationCode: string;
+  departureDate: string;
+  returnDate?: string;
+  adults: string;
+  children?: string;
+  travelClass?: string;
+}
+
 
 dotenv.config();
 
@@ -17,7 +44,7 @@ app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
   const flightDetails = req.query;
-  console.log(flightDetails, 'in server', flightDetails.departureDate);
+
   amadeus.shopping.flightOffersSearch.get({
     originLocationCode: flightDetails.originLocationCode,
     destinationLocationCode: flightDetails.destinationLocationCode,

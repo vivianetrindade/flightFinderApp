@@ -1,21 +1,31 @@
 import axios from 'axios';
 
-interface FlightDetails {
+interface FlightReceived {
   originLocationCode: string;
   destinationLocationCode: string;
-  departureDate: Date;
-  returnDate?: Date;
+  departureDate: Date ;
+  returnDate?: Date ;
   adults: string;
   children?: string;
   travelClass?: string;
 }
 
 
-export const getFligts = async (flightDetails: FlightDetails) => {
-  console.log(flightDetails, 'in data utils', flightDetails.departureDate);
-  const response = await axios.get(`http://localhost:8000/`, {
-    params: flightDetails,
-    });
-  console.log(response.data);
-  return response.data;
+export const getFligts = async (flightReceived: FlightReceived) => {
+  
+  return await axios.get(`http://localhost:8000/`,
+   {
+    params: {
+      originLocationCode: flightReceived.originLocationCode,
+      destinationLocationCode: flightReceived.destinationLocationCode,
+      departureDate: flightReceived.departureDate.toISOString().split('T')[0],
+      returnDate: flightReceived.returnDate?.toISOString().split('T')[0],
+      adults: flightReceived.adults,
+      children: flightReceived.children,
+      travelClass: flightReceived.travelClass
+    },
+    }
+    );
+  
+   
 }

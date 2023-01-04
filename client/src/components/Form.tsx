@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from './styles/Container.style';
 import { StyledForm, StyledRadioInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import { getFligts } from '../utils/data-utils';
+import data from '../data.json';
 
 function Form() {
   const [flightDetails, setFlightDetails] = React.useState<any>(
@@ -15,6 +16,7 @@ function Form() {
     children: '0',
     travelClass: ''}
   )
+  const [flightFound, setFlightFound] = React.useState<any>(data.data)
  
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -22,18 +24,27 @@ function Form() {
   }
 
   const handleDateChanges = (date: Date, name: string) => {
-    
+    console.log('date', date)
     setFlightDetails({...flightDetails, [name]: date})
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    flightDetails.departureDate = flightDetails.departureDate.toISOString().split('T')[0];
-    flightDetails.returnDate = flightDetails.returnDate.toISOString().split('T')[0];
-    console.log(flightDetails)
-    getFligts(flightDetails);
+   
+    getFligts(flightDetails)
+    .then((res: any) => {
+      console.log('res', res.data)
+      setFlightFound(res.data)
+    }
+    )
   }
 
+  // useEffect(() => {
+  //   setFlightFound(flightDetails)
+  //   console.log('flightDetails', flightFound)
+  // }, [flightDetails, flightFound])
+
   const cityOptions = [{value: 'LAX', label: 'Los Angeles'}, {value: 'SFO', label: 'San Francisco'}, {value: 'NYC', label: 'New York'}]
+  
   return (
     <Container>
       <StyledForm onSubmit={handleSubmit}>
@@ -58,6 +69,14 @@ function Form() {
         <StyledButton type='submit'>Search</StyledButton>
 
       </StyledForm>
+      {flightFound && flightFound.map((flight: any) => {
+        return (
+          <div key={flight.id}>
+            <p>{flight.price.total}</p>
+          </div>
+        )
+      })
+      }
     </Container>
   )
 }
