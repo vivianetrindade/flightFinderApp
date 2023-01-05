@@ -2,11 +2,15 @@ import React from 'react';
 import { StyledCard, StyledTitle } from './styles/Card.style';
 import { Flex2 } from './styles/Flex.style';
 import Modal from 'react-modal';
+import { StyledButton } from './styles/Button.style';
 
 const customStyles = {
   content: {
+    top: '40%',
+
+    background: '#ebfbff',
     height:'fit-content',
-    
+    color: 'black',
   },
 };
 
@@ -29,7 +33,7 @@ function Card({flight}: {flight: any}) {
     <>
     <StyledCard onClick={()=>openModal(flight.id)}>
       <div key={flight.id}>
-        <StyledTitle>Flight Details</StyledTitle>
+        <StyledTitle>Option {flight.id}</StyledTitle>
         {console.log('flight', flight)}
              {flight.itineraries.map((intineraries:any)=>{
               return intineraries.segments.map((segment:any) => {
@@ -52,6 +56,7 @@ function Card({flight}: {flight: any}) {
             })}
             <Flex2>
               <p><span>Total price:</span> {flight.price.grandTotal}{flight.price.currency}</p>
+              <button>More Details</button>
             </Flex2>
             
           </div>
@@ -65,10 +70,32 @@ function Card({flight}: {flight: any}) {
       style={customStyles}
       appElement={document.getElementById('root') as HTMLElement}
       >
-      <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+        
         <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <p>{flight.numberOfBookableSeats}</p>
+        <Flex2>
+        {/* <h2>Itinerarie</h2> */}
+        {flight.itineraries.map((intineraries:any)=>{
+          return intineraries.segments.map((segment:any)=> {
+            return(
+              <>
+              <h4 >From: {segment.departure.iataCode} -- To: {segment.arrival.iataCode}</h4>
+              </>
+            )
+          })
+        }
+        )}
+        
+        <p>Number of seats available: {flight.numberOfBookableSeats}</p>
+        {flight.travelerPricings.map((travelerPricing:any)=>{
+          return (
+            <>
+            <p>Price for {travelerPricing.travelerType}: {travelerPricing.price.total}{travelerPricing.price.currency}</p>
+            </>
+          )
+        }
+        )}
+        </Flex2>
+        <StyledButton>Book now</StyledButton>
       </Modal>
       </>
   )

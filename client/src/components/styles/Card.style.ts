@@ -10,6 +10,7 @@ export const StyledCard = styled.div`
   margin: 2rem 0;
   padding: 1.5rem;
   width: 100%;
+  cursor: pointer;
   h3 {
     font-size: 1.5rem;
   }
