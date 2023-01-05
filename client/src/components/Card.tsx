@@ -1,10 +1,33 @@
 import React from 'react';
 import { StyledCard, StyledTitle } from './styles/Card.style';
 import { Flex2 } from './styles/Flex.style';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    height:'fit-content',
+    
+  },
+};
 
 function Card({flight}: {flight: any}) {
+  let subtitle: any;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  const openModal = (id: string) => {
+    setIsOpen(true);
+  }
+
+  const afterOpenModal = () => {
+    subtitle.style.color = '#f00';
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
   return (
-    <StyledCard>
+    <>
+    <StyledCard onClick={()=>openModal(flight.id)}>
       <div key={flight.id}>
         <StyledTitle>Flight Details</StyledTitle>
         {console.log('flight', flight)}
@@ -28,11 +51,26 @@ function Card({flight}: {flight: any}) {
               })
             })}
             <Flex2>
-              <p><span>Price per adult:</span> {flight.price.grandTotal}{flight.price.currency}</p>
+              <p><span>Total price:</span> {flight.price.grandTotal}{flight.price.currency}</p>
             </Flex2>
             
           </div>
     </StyledCard>
+ 
+    <Modal
+      isOpen={modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      contentLabel="Example Modal"
+      style={customStyles}
+      appElement={document.getElementById('root') as HTMLElement}
+      >
+      <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+        <p>{flight.numberOfBookableSeats}</p>
+      </Modal>
+      </>
   )
 }
 

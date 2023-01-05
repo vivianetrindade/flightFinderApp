@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 interface DatePickerProps {
   className?: string;
   title: string;
-  date: Date;
+  date?: Date;
   name: string;
   onChange: (date: Date, name: string) => void;
 }

@@ -6,17 +6,30 @@ import { getFligts } from '../utils/data-utils';
 import Card from './Card';
 import data from '../data.json';
 
-function Form() {
-  const [flightDetails, setFlightDetails] = React.useState<any>(
-    {trip: 'one-way', 
-    originLocationCode: '',
-    destinationLocationCode: '',
-    departureDate: new Date(),
-    returnDate: new Date(),
-    adults: '0',
-    children: '0',
-    travelClass: ''}
-  )
+interface FormProps {
+  flightDetails: {
+    trip: string;
+    originLocationCode: string;
+    destinationLocationCode: string;
+    departureDate: Date;
+    returnDate?: Date;
+    adults: string;
+    children?: string;
+    travelClass?: string;
+  };
+  setFlightDetails: React.Dispatch<React.SetStateAction<{
+    trip: string;
+    originLocationCode: string;
+    destinationLocationCode: string;
+    departureDate: Date;
+    returnDate?: Date;
+    adults: string;
+    children?: string;
+    travelClass?: string;
+  }>>;
+  }
+function Form({flightDetails, setFlightDetails}: FormProps) {
+  
   const [flightFound, setFlightFound] = React.useState<any>([])
  
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 interface FlightReceived {
+  trip: string;
   originLocationCode: string;
   destinationLocationCode: string;
   departureDate: Date ;

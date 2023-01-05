@@ -18,12 +18,22 @@ const theme = {
 };
 
 function App() {
+  const [flightDetails, setFlightDetails] = React.useState<any>(
+    {trip: 'one-way', 
+    originLocationCode: '',
+    destinationLocationCode: '',
+    departureDate: new Date(),
+    returnDate: new Date(),
+    adults: '0',
+    children: '0',
+    travelClass: ''}
+  )
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
         <Header/>
-        <Form />
+        <Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>
       </div>
     </ThemeProvider>
   );
