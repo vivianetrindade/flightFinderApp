@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container } from './styles/Container.style';
 import { StyledForm, StyledRadioInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import { getFligts } from '../utils/data-utils';
+import Card from './Card';
 import data from '../data.json';
 
 function Form() {
@@ -16,7 +17,7 @@ function Form() {
     children: '0',
     travelClass: ''}
   )
-  const [flightFound, setFlightFound] = React.useState<any>(data.data)
+  const [flightFound, setFlightFound] = React.useState<any>([])
  
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -37,11 +38,6 @@ function Form() {
     }
     )
   }
-
-  // useEffect(() => {
-  //   setFlightFound(flightDetails)
-  //   console.log('flightDetails', flightFound)
-  // }, [flightDetails, flightFound])
 
   const cityOptions = [{value: 'LAX', label: 'Los Angeles'}, {value: 'SFO', label: 'San Francisco'}, {value: 'NYC', label: 'New York'}]
   
@@ -71,9 +67,7 @@ function Form() {
       </StyledForm>
       {flightFound && flightFound.map((flight: any) => {
         return (
-          <div key={flight.id}>
-            <p>{flight.price.total}</p>
-          </div>
+          <Card flight={flight} />
         )
       })
       }
