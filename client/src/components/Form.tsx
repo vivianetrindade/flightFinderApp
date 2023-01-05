@@ -65,6 +65,8 @@ function Form() {
         <StyledButton type='submit'>Search</StyledButton>
 
       </StyledForm>
+
+      <h1>Flight Options</h1>
       {flightFound && flightFound.map((flight: any) => {
         return (
           <Card flight={flight} />

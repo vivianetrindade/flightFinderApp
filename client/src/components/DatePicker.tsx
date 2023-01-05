@@ -23,6 +23,7 @@ function DatePickerComponent({ className, title, onChange, date, name }: DatePic
         selected={date}
         onChange={(date: Date)=> onChange(date, name)}
         dateFormat='yyyy/MM/dd'
+        minDate={new Date()}
         />
       </div>
     </Flex>
