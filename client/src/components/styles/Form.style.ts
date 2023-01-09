@@ -23,6 +23,10 @@ export const StyledForm = styled.form`
   }
 `;
 
+export const StyledFormContainer = styled.div`
+  // display: flex;
+`;
+
 export const StyledRadioInput = styled(RadioInput)`
   margin: 0.5rem 0.5rem;
   label {

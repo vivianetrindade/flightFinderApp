@@ -1,8 +1,10 @@
 import React from 'react';
+import { createBrowserRouter as createRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './components/styles/Global';
 import Header from './components/Header';
 import Form from './components/Form';
+import Booking from './pages/Booking';
 
 const theme = {
   colors: {
@@ -28,15 +30,32 @@ function App() {
     children: '0',
     travelClass: ''}
   )
+  const router = createRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root/>}>
+        <Route index element={<Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>}/>
+        <Route path='/bookingInfo' element={<Booking/>}/>
+      </Route>
+    )
+  );
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-        <Header/>
-        <Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>
+        <RouterProvider router={router}/>
       </div>
     </ThemeProvider>
   );
+}
+const Root = () => {
+  return (
+    <>
+    <Header/>
+    <>
+      <Outlet/>
+    </>
+    </>
+  )
 }
 
 export default App;
