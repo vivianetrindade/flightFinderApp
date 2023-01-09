@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { StyledButton } from './styles/Button.style';
 import { Flex2 } from './styles/Flex.style';
+import { Link } from 'react-router-dom';
 
 interface ModalComponentProps {
   modalIsOpen: boolean;
@@ -21,6 +22,57 @@ const customStyles = {
 };
 
 function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: ModalComponentProps) {
+  const [selectedFlight, setSelectedFlight] = React.useState<any>(
+    {
+    id: '', 
+    itineraries: [
+      {
+        duration: '', 
+        segments: [
+          {
+            id: '', 
+            departure: 
+            {
+              iataCode: '', 
+              at: ''
+            },
+            arrival: 
+            {
+              iataCode:'', 
+              at: ''
+            }
+          }
+        ] 
+      }
+    ],
+     numberOfBookableSeats: 0, 
+     price: 
+     {
+      grandTotal: '',
+      currency: ''
+    }, 
+    travelerPricings: 
+    [
+      {
+        travelerType: '',
+        price: 
+        {
+          total: '',
+          currency: ''
+        }
+      }
+    ]
+  });
+
+
+  useEffect(() => {
+    setSelectedFlight({...selectedFlight, id: flight.id, itineraries: flight.itineraries, numberOfBookableSeats: flight.numberOfBookableSeats, price: flight.price, travelerPricings: flight.travelerPricings});
+  }, []);
+
+
+  const handleBooking = () => {
+    console.log('selectedFlight', selectedFlight)
+  }
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -55,7 +107,9 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
         }
         )}
         </Flex2>
-        <StyledButton>Book now</StyledButton>
+        {/* <Link to='/bookingInfo'> */}
+        <StyledButton onClick={handleBooking}>Book now</StyledButton>
+        {/* </Link> */}
       </Modal>
   )
 }
