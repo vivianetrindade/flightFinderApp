@@ -25,16 +25,22 @@ interface PassengerDetailsProps {
     zip: string;
     country: string;
   }>>;
+  numberOfPassengers: number;
 }
 
-function PassengerDetails({passengerInfo, setPassengerInfo}: PassengerDetailsProps) {
+function PassengerDetails({passengerInfo, setPassengerInfo, numberOfPassengers}: PassengerDetailsProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassengerInfo({...passengerInfo, [e.target.name]: e.target.value})
   }
-  return (
-    <StyledForm2>
-      <Flex width='100%'>
+
+  const getPassengers = () => {
+    const passengers = [];
+    for (let i = 0; i < numberOfPassengers; i++) {
+      passengers.push(
+        <>
+      <h3>Passenger {i+1}</h3>
+        <Flex width='100%'>
       <StyledInput id='firstName' name='firstName' type='text' value={passengerInfo.firstName} label='First Name' onChange={e=> handleChange(e)}/>
       <StyledInput id='lastName' name='lastName' type='text' value={passengerInfo.lastName} label='Last Name' onChange={e=> handleChange(e)}/>
       </Flex>
@@ -51,8 +57,17 @@ function PassengerDetails({passengerInfo, setPassengerInfo}: PassengerDetailsPro
       <StyledInput id='zip' name='zip' type='text' value={passengerInfo.zip} label='Zip Code' onChange={e=> handleChange(e)}/>
       <StyledInput id='country' name='country' type='text' value={passengerInfo.country} label='Country' onChange={e=> handleChange(e)}/>
       </Flex>
+      </>
+      )
+    }
+    return passengers;
+  }
+  return (
+    <StyledForm2>
+      {getPassengers()}
     </StyledForm2>
   )
+  
 }
 
 export default PassengerDetails

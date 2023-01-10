@@ -34,7 +34,7 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root/>}>
         <Route index element={<Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>}/>
-        <Route path='/bookingInfo' element={<Booking/>}/>
+        <Route path='/bookingInfo' element={<Booking flightDetails={flightDetails}/>}/>
       </Route>
     )
   );

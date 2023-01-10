@@ -45,6 +45,7 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
    
     getFligts(flightDetails)
     .then((res: any) => {
+      console.log(res.data)
       setFlightFound(res.data)
     }
     )

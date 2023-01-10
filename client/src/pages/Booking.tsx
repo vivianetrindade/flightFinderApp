@@ -29,7 +29,7 @@ interface FlightBook {
 }
 
 
-function Booking() {
+function Booking({flightDetails}: {flightDetails: any}) {
   const [progress, setProgress] = useState(0);
   const [passengerInfo, setPassengerInfo] = useState<PassengerInfo>({
     firstName: '',
@@ -52,11 +52,11 @@ function Booking() {
     travelClass: '',
     price: '',
   });
-
+  const numberOfPassengers = parseInt(flightDetails.adults) + parseInt(flightDetails.children);
   
 
   const progressTitle = [
-    {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo}/>}, 
+    {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo} numberOfPassengers={numberOfPassengers}/>}, 
     {title: 'Flight Details', component: <FlightDetails flightBook={flightBook} setFlightBook={setFlightBook}/>},
     {title: 'Booking Overview and Confirmation', component: <BookingOverview/>}
   ]
@@ -79,7 +79,9 @@ function Booking() {
             Back
           </button>
           <button
-            onClick={()=>setProgress((currPage)=> currPage +1)}
+            onClick={()=>{
+              
+              setProgress((currPage)=> currPage +1)}}
           >
             {progress === progressTitle.length - 1 ? 'Confirm' : 'Next'}
           </button>
