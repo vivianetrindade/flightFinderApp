@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from './styles/Container.style';
-import { StyledForm, StyledRadioInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
+import { StyledForm, StyledInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import { getFligts } from '../utils/data-utils';
 import Card from './Card';
@@ -38,7 +38,6 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
   }
 
   const handleDateChanges = (date: Date, name: string) => {
-    console.log('date', date)
     setFlightDetails({...flightDetails, [name]: date})
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,7 +45,6 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
    
     getFligts(flightDetails)
     .then((res: any) => {
-      console.log('res', res.data)
       setFlightFound(res.data)
     }
     )
@@ -59,8 +57,8 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
       <StyledForm onSubmit={handleSubmit}>
         <label htmlFor="">Find your Flight</label>
         <Flex>
-          <StyledRadioInput id='one-way' name='trip' value='one-way' label='One-Way' type='radio' onChange={handleChanges} />
-          <StyledRadioInput id='round-trip' name='trip' value='round-trip' label='Round-trip' type='radio' onChange={handleChanges} />
+          <StyledInput id='one-way' name='trip' value='one-way' label='One-Way' type='radio' onChange={handleChanges} />
+          <StyledInput id='round-trip' name='trip' value='round-trip' label='Round-trip' type='radio' onChange={handleChanges} />
         </Flex>
         <Flex>
           <StyledSelectInput name='originLocationCode' id='origin' label='Origin' options={cityOptions} onChange={handleChanges}/>

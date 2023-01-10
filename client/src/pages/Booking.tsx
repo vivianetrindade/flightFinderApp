@@ -5,12 +5,59 @@ import PassengerDetails from '../components/PassengerDetails';
 import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
 
+interface PassengerInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+};
+
+interface FlightBook {
+  originLocationCode: string;
+  destinationLocationCode: string;
+  departureDate: string;
+  returnDate: string;
+  adults: string;
+  children: string;
+  travelClass: string;
+  price: string;
+}
+
+
 function Booking() {
   const [progress, setProgress] = useState(0);
+  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+  });
+  const [flightBook, setFlightBook] = useState<FlightBook>({
+    originLocationCode: '',
+    destinationLocationCode: '',
+    departureDate: '',
+    returnDate: '',
+    adults: '',
+    children: '',
+    travelClass: '',
+    price: '',
+  });
+
+  
 
   const progressTitle = [
-    {title: 'Passenger Details', component: <PassengerDetails/>}, 
-    {title: 'Flight Details', component: <FlightDetails/>},
+    {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo}/>}, 
+    {title: 'Flight Details', component: <FlightDetails flightBook={flightBook} setFlightBook={setFlightBook}/>},
     {title: 'Booking Overview and Confirmation', component: <BookingOverview/>}
   ]
 

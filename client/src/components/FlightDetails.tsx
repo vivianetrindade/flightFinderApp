@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-function FlightDetails() {
+
+function FlightDetails({flightBook, setFlightBook}: {flightBook: any, setFlightBook: any}) {
   return (
     <div>FlightDetails</div>
   )

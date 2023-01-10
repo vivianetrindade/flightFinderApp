@@ -15,7 +15,7 @@ interface DatePickerProps {
 function DatePickerComponent({ className, title, onChange, date, name }: DatePickerProps) {
   
   return (
-    <Flex direction= 'row' className={className}>
+    <Flex direction='row' className={className}>
       <h2>{title}</h2>
       <div>
         <DatePicker

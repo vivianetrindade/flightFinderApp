@@ -23,17 +23,37 @@ export const StyledForm = styled.form`
   }
 `;
 
+export const StyledForm2 = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: ${({ theme }) => theme.colors.form};
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    max-width: 100%;
+  }
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+`;
+  
+
 export const StyledFormContainer = styled.div`
   // display: flex;
 `;
 
-export const StyledRadioInput = styled(RadioInput)`
+export const StyledInput = styled(RadioInput)`
   margin: 0.5rem 0.5rem;
   label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
+    width: 50%;
     margin: 0.5rem 0;
     font-size: 1rem;
   }
@@ -44,6 +64,7 @@ export const StyledRadioInput = styled(RadioInput)`
     border-radius: 5px;
     outline: none;
     font-size: 1rem;
+    width: 100%;
     &:focus {
       border: 1px solid ${({ theme }) => theme.colors.inputBorderFocus};
     }
@@ -121,4 +142,3 @@ export const StyledButton = styled.button`
   }
 `;
 
-  

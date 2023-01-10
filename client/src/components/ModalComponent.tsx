@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { StyledButton } from './styles/Button.style';
 import { Flex2 } from './styles/Flex.style';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ModalComponentProps {
   modalIsOpen: boolean;
@@ -63,6 +63,7 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
       }
     ]
   });
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -71,7 +72,8 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
 
 
   const handleBooking = () => {
-    console.log('selectedFlight', selectedFlight)
+    localStorage.setItem('selectedFlight', JSON.stringify(selectedFlight));
+    navigate('/bookingInfo');
   }
   return (
     <Modal
