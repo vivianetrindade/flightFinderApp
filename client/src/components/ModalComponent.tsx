@@ -61,13 +61,15 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
           currency: ''
         }
       }
-    ]
+    ],
+    numberOfPassengers: 0
   });
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    setSelectedFlight({...selectedFlight, id: flight.id, itineraries: flight.itineraries, numberOfBookableSeats: flight.numberOfBookableSeats, price: flight.price, travelerPricings: flight.travelerPricings});
+    setSelectedFlight({...selectedFlight, id: flight.id, itineraries: flight.itineraries, numberOfBookableSeats: flight.numberOfBookableSeats, price: flight.price, travelerPricings: flight.travelerPricings, numberOfPassengers: flight.travelerPricings.length});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

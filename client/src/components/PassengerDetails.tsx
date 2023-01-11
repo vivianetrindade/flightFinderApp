@@ -39,20 +39,20 @@ function PassengerDetails({passengerInfo, setPassengerInfo, numberOfPassengers}:
     for (let i = 0; i < numberOfPassengers; i++) {
       passengers.push(
         <>
-      <h3>Passenger {i+1}</h3>
-        <Flex width='100%'>
+      <h3 key={i}>Passenger {i+1}</h3>
+        <Flex width='70rem'>
       <StyledInput id='firstName' name='firstName' type='text' value={passengerInfo.firstName} label='First Name' onChange={e=> handleChange(e)}/>
       <StyledInput id='lastName' name='lastName' type='text' value={passengerInfo.lastName} label='Last Name' onChange={e=> handleChange(e)}/>
       </Flex>
-      <Flex>
+      <Flex width='100%'>
       <StyledInput id='email' name='email' type='text' value={passengerInfo.email} label='Email' onChange={e=> handleChange(e)}/>
       <StyledInput id='phone' name='phone' type='text' value={passengerInfo.phone} label='Phone' onChange={e=> handleChange(e)}/>
       </Flex>
-      <Flex>
+      <Flex width='100%'>
       <StyledInput id='address' name='address' type='text' value={passengerInfo.address} label='Address' onChange={e=> handleChange(e)}/>
       <StyledInput id='city' name='city' type='text' value={passengerInfo.city} label='City' onChange={e=> handleChange(e)}/>
       </Flex>
-      <Flex>
+      <Flex width='100%'>
       <StyledInput id='state' name='state' type='text' value={passengerInfo.state} label='State' onChange={e=> handleChange(e)}/>
       <StyledInput id='zip' name='zip' type='text' value={passengerInfo.zip} label='Zip Code' onChange={e=> handleChange(e)}/>
       <StyledInput id='country' name='country' type='text' value={passengerInfo.country} label='Country' onChange={e=> handleChange(e)}/>

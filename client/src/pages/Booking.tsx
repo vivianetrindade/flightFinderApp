@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyledFormContainer } from '../components/styles/Form.style';
 import { StyledProgressBar } from '../components/styles/ProgressBar.style';
 import PassengerDetails from '../components/PassengerDetails';
@@ -17,19 +17,26 @@ interface PassengerInfo {
   country: string;
 };
 
-interface FlightBook {
-  originLocationCode: string;
-  destinationLocationCode: string;
-  departureDate: string;
-  returnDate: string;
-  adults: string;
-  children: string;
+export interface FlightBook {
+  goFlight:{
+    departure: string;
+    arrival: string;
+    departureDate: string;
+    returnDate: string;
+  };
+  backFlight?:{
+    departure: string;
+    arrival: string;
+    departureDate: string;
+    returnDate: string;
+  };
+  numberOfPassengers: number;
   travelClass: string;
   price: string;
 }
 
 
-function Booking({flightDetails}: {flightDetails: any}) {
+function Booking() {
   const [progress, setProgress] = useState(0);
   const [passengerInfo, setPassengerInfo] = useState<PassengerInfo>({
     firstName: '',
@@ -43,21 +50,49 @@ function Booking({flightDetails}: {flightDetails: any}) {
     country: '',
   });
   const [flightBook, setFlightBook] = useState<FlightBook>({
-    originLocationCode: '',
-    destinationLocationCode: '',
-    departureDate: '',
-    returnDate: '',
-    adults: '',
-    children: '',
+    goFlight:{
+      departure: '',
+      arrival: '',
+      departureDate: '',
+      returnDate: '',
+    },
+    backFlight:{
+      departure: '',
+      arrival: '',
+      departureDate: '',
+      returnDate: '',
+    },
+    numberOfPassengers: 0,
     travelClass: '',
     price: '',
   });
-  const numberOfPassengers = parseInt(flightDetails.adults) + parseInt(flightDetails.children);
+
+  useEffect(() => {
+    const selectedFlight = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
+    console.log(selectedFlight, 'selectedFlight');
+    setFlightBook({
+      goFlight:{
+        departure: selectedFlight.itineraries[0].segments.map((segment:{departure: {iataCode: string}})=> segment.departure.iataCode),
+        arrival: selectedFlight.itineraries[0].segments.map((segment: {arrival: {iataCode: string}}) => segment.arrival.iataCode),
+        departureDate: selectedFlight.itineraries[0].segments.map((segment: {departure: {at: string}}) => segment.departure.at),
+        returnDate: selectedFlight.itineraries[1].segments.map((segment: {arrival: {at: string}}) => segment.arrival.at),
+      },
+      backFlight:{
+        departure: selectedFlight.itineraries[1].segments.map((segment: {departure: {iataCode: string}}) => segment.departure.iataCode),
+        arrival: selectedFlight.itineraries[1].segments.map((segment: {arrival: {iataCode: string}}) => segment.arrival.iataCode),
+        departureDate: selectedFlight.itineraries[1].segments.map((segment: {departure: {at: string}}) => segment.departure.at),
+        returnDate: selectedFlight.itineraries[1].segments.map((segment: {arrival: {at: string}}) => segment.arrival.at),
+      },
+      numberOfPassengers: selectedFlight.numberOfPassengers,
+      travelClass: selectedFlight.travelerPricings[0].fareDetailsBySegment[0].cabin,
+      price: selectedFlight.price.grandTotal + selectedFlight.price.currency,})
+  }, [])
+  
   
 
   const progressTitle = [
-    {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo} numberOfPassengers={numberOfPassengers}/>}, 
-    {title: 'Flight Details', component: <FlightDetails flightBook={flightBook} setFlightBook={setFlightBook}/>},
+    {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo} numberOfPassengers={flightBook.numberOfPassengers}/>}, 
+    {title: 'Flight Details', component: <FlightDetails flightBook={flightBook} />},
     {title: 'Booking Overview and Confirmation', component: <BookingOverview/>}
   ]
 
