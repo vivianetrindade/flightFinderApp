@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyledFormContainer } from '../components/styles/Form.style';
 import { StyledProgressBar } from '../components/styles/ProgressBar.style';
+import { Container } from '../components/styles/Container.style';
 import PassengerDetails from '../components/PassengerDetails';
 import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
@@ -101,6 +102,7 @@ function Booking() {
       <div>
         <StyledProgressBar width={progress === 0 ? '33.3%' : progress === 1 ? '66.6%' : '100%'}/>
       </div>
+      <Container>
       <StyledFormContainer>
         <div>
           <h1>{progressTitle[progress].title}</h1>
@@ -122,6 +124,7 @@ function Booking() {
           </button>
         </div>
       </StyledFormContainer>
+      </Container>
 
     </div>
   )

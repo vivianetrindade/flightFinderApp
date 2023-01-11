@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Flex = styled.div<{ direction?: string, width?: string }>`
   display: flex;
   align-items: center;
-  width: ${({ width }) => width || 'auto'};
+  
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: ${({ direction }) => direction || 'column'};
@@ -22,3 +22,4 @@ export const Flex2 = styled.div`
     width: auto;
   }
 `;
+

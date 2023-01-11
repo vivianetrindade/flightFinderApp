@@ -26,3 +26,12 @@ export const StyledTitle = styled.h2`
   text-align: center;
   color: pink;
 `;
+
+export const StyledCard2 = styled.div`
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+  p {
+    margin: 0.5rem 0;
+  }
+`;
