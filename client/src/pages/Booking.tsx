@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { StyledFormContainer } from '../components/styles/Form.style';
 import { StyledProgressBar } from '../components/styles/ProgressBar.style';
 import { Container } from '../components/styles/Container.style';
+import { StyledButton } from '../components/styles/Form.style';
 import PassengerDetails from '../components/PassengerDetails';
 import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
 
-interface PassengerInfo {
+export interface PassengerInfo {
   firstName: string;
   lastName: string;
   email: string;
@@ -16,6 +17,7 @@ interface PassengerInfo {
   state: string;
   zip: string;
   country: string;
+  id: number;
 };
 
 export interface FlightBook {
@@ -39,7 +41,7 @@ export interface FlightBook {
 
 function Booking() {
   const [progress, setProgress] = useState(0);
-  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo>({
+  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo []>([{
     firstName: '',
     lastName: '',
     email: '',
@@ -49,7 +51,8 @@ function Booking() {
     state: '',
     zip: '',
     country: '',
-  });
+    id: 0,
+  }]);
   const [flightBook, setFlightBook] = useState<FlightBook>({
     goFlight:{
       departure: '',
@@ -94,7 +97,7 @@ function Booking() {
   const progressTitle = [
     {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo} numberOfPassengers={flightBook.numberOfPassengers}/>}, 
     {title: 'Flight Details', component: <FlightDetails flightBook={flightBook} />},
-    {title: 'Booking Overview and Confirmation', component: <BookingOverview/>}
+    {title: 'Booking Overview and Confirmation', component: <BookingOverview passengerInfo={passengerInfo} flightBook={flightBook} />}
   ]
 
   return (
@@ -108,20 +111,25 @@ function Booking() {
           <h1>{progressTitle[progress].title}</h1>
           {progressTitle[progress].component}
         </div>
-        <div>
-          <button
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <StyledButton
             disabled={progress === 0}
             onClick={()=>setProgress((currPage)=> currPage -1)}
           >
             Back
-          </button>
-          <button
+          </StyledButton>
+          <StyledButton
             onClick={()=>{
-              
-              setProgress((currPage)=> currPage +1)}}
+              if (progress === progressTitle.length - 1) {
+                console.log('passengerInfo', passengerInfo);
+                console.log('flightBook', flightBook);
+              } else {
+                setProgress((currPage)=> currPage +1)}}
+
+              }
           >
             {progress === progressTitle.length - 1 ? 'Confirm' : 'Next'}
-          </button>
+          </StyledButton>
         </div>
       </StyledFormContainer>
       </Container>

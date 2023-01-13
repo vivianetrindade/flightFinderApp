@@ -28,8 +28,8 @@ export const StyledTitle = styled.h2`
 `;
 
 export const StyledCard2 = styled.div`
-  margin: 1rem;
-  padding: 1rem;
+  margin: 1rem 1rem 0rem 1rem;
+  padding: 0.5rem;
   text-align: center;
   p {
     margin: 0.5rem 0;

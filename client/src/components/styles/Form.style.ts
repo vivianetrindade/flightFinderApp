@@ -136,9 +136,13 @@ export const StyledButton = styled.button`
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.9;
     transform: scale(0.98);
+  }
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 

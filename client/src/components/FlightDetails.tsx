@@ -21,11 +21,11 @@ function FlightDetails({flightBook}: {flightBook: FlightBook}) {
           <p>Return Date: {flightBook.backFlight?.returnDate} </p>
         </StyledCard2>
       </Flex>
-      
-        <h3>Number of Passengers: {flightBook.numberOfPassengers}</h3>
-        <h3>Travel Class: {flightBook.travelClass}</h3>
-        <h3>Price: {flightBook.price}</h3>
-      
+      <StyledCard2>
+        <h4>Number of Passengers: {flightBook.numberOfPassengers}</h4>
+        <h4>Travel Class: {flightBook.travelClass}</h4>
+        <h4>Total Price: {flightBook.price}</h4>
+      </StyledCard2>
     </Container2>
   )
 }
