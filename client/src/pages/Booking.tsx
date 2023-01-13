@@ -41,18 +41,20 @@ export interface FlightBook {
 
 function Booking() {
   const [progress, setProgress] = useState(0);
-  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo []>([{
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-    id: 0,
-  }]);
+  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo []>([
+    {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+      id: 0,
+    }
+  ]);
   const [flightBook, setFlightBook] = useState<FlightBook>({
     goFlight:{
       departure: '',
@@ -74,6 +76,23 @@ function Booking() {
   useEffect(() => {
     const selectedFlight = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
     console.log(selectedFlight, 'selectedFlight');
+    for (let i = 0; i < selectedFlight.numberOfPassengers; i++) {
+      setPassengerInfo([
+        ...passengerInfo,
+        {
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          address: '',
+          city: '',
+          state: '',
+          zip: '',
+          country: '',
+          id: i,
+        },
+      ]);
+    }
     setFlightBook({
       goFlight:{
         departure: selectedFlight.itineraries[0].segments.map((segment:{departure: {iataCode: string}})=> segment.departure.iataCode),
