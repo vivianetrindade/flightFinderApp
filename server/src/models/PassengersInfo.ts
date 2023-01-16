@@ -5,16 +5,21 @@ export interface IPassengerInfo {
   lastName: string;
   email: string;
   phone: string;
-  passport: string;
-  flightBooking: string;
+  adress: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
 }
 
-export interface IPassengerInfoModel extends Document, IPassengerInfo{
+export interface IPassengerInfoModel extends Document {
   passengers: IPassengerInfo[];
+  flightBooking: string;
 }
 const PassengersInfoSchema: Schema = new Schema(
   {
-    passengers: [Object]
+    passengers: [Object],
+    flightBooking: { type: Types.ObjectId, ref: "FlightBooking" , required: true,}
   },
   {
     versionKey: false,

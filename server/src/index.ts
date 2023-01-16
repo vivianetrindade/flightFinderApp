@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { config } from './config/config';
 import flightBookingRoutes from './routes/FlightBooking';
+import passengersInfoRoutes from './routes/PassengersInfo';
 
 
 const Amadeus = require('amadeus');
@@ -52,6 +53,7 @@ app.use((req: Request, res: Response, next: any) => {
 
   // routes
 app.use('/flightBookings', flightBookingRoutes);
+app.use('/passengersInfo', passengersInfoRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   const flightDetails = req.query;
