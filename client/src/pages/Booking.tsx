@@ -6,6 +6,7 @@ import { StyledButton } from '../components/styles/Form.style';
 import PassengerDetails from '../components/PassengerDetails';
 import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
+import { postFlights, postPassengers } from '../utils/data-utils';
 
 export interface PassengerInfo {
   firstName: string;
@@ -73,9 +74,11 @@ function Booking() {
     price: '',
   });
 
+  
   useEffect(() => {
     const selectedFlight = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
     console.log(selectedFlight, 'selectedFlight');
+    
     for (let i = 0; i < selectedFlight.numberOfPassengers; i++) {
       setPassengerInfo([
         ...passengerInfo,
@@ -95,23 +98,42 @@ function Booking() {
     }
     setFlightBook({
       goFlight:{
-        departure: selectedFlight.itineraries[0].segments.map((segment:{departure: {iataCode: string}})=> segment.departure.iataCode),
-        arrival: selectedFlight.itineraries[0].segments.map((segment: {arrival: {iataCode: string}}) => segment.arrival.iataCode),
-        departureDate: selectedFlight.itineraries[0].segments.map((segment: {departure: {at: string}}) => segment.departure.at),
-        returnDate: selectedFlight.itineraries[1].segments.map((segment: {arrival: {at: string}}) => segment.arrival.at),
+        departure: selectedFlight.itineraries[0].segments[0].departure.iataCode,
+        arrival: selectedFlight.itineraries[0].segments[0].arrival.iataCode,
+        departureDate: selectedFlight.itineraries[0].segments[0].departure.at,
+        returnDate: selectedFlight.itineraries[1].segments[0].arrival.at,
       },
       backFlight:{
-        departure: selectedFlight.itineraries[1].segments.map((segment: {departure: {iataCode: string}}) => segment.departure.iataCode),
-        arrival: selectedFlight.itineraries[1].segments.map((segment: {arrival: {iataCode: string}}) => segment.arrival.iataCode),
-        departureDate: selectedFlight.itineraries[1].segments.map((segment: {departure: {at: string}}) => segment.departure.at),
-        returnDate: selectedFlight.itineraries[1].segments.map((segment: {arrival: {at: string}}) => segment.arrival.at),
+        departure: selectedFlight.itineraries[1].segments[0].departure.iataCode,
+        arrival: selectedFlight.itineraries[1].segments[0].arrival.iataCode,
+        departureDate: selectedFlight.itineraries[1].segments[0].departure.at,
+        returnDate: selectedFlight.itineraries[1].segments[0].arrival.at,
       },
       numberOfPassengers: selectedFlight.numberOfPassengers,
       travelClass: selectedFlight.travelerPricings[0].fareDetailsBySegment[0].cabin,
       price: selectedFlight.price.grandTotal + selectedFlight.price.currency,})
   }, [])
   
-  
+  const handleClick = () => {
+    
+      if (progress === progressTitle.length - 1) {
+        postFlights(flightBook)
+        .then((res) => {
+          console.log(res.data, 'flights');
+          postPassengers(passengerInfo, res.data._id)
+          .then((res) => {
+            console.log(res.data, 'passengers');
+          }
+          )
+        }).catch((err) => {
+          console.log(err);
+        })
+      } else {
+        setProgress((currPage)=> currPage +1)}
+  }
+
+      
+    
 
   const progressTitle = [
     {title: 'Passenger Details', component: <PassengerDetails passengerInfo={passengerInfo} setPassengerInfo={setPassengerInfo} numberOfPassengers={flightBook.numberOfPassengers}/>}, 
@@ -138,14 +160,7 @@ function Booking() {
             Back
           </StyledButton>
           <StyledButton
-            onClick={()=>{
-              if (progress === progressTitle.length - 1) {
-                console.log('passengerInfo', passengerInfo);
-                console.log('flightBook', flightBook);
-              } else {
-                setProgress((currPage)=> currPage +1)}}
-
-              }
+            onClick={()=>handleClick()}
           >
             {progress === progressTitle.length - 1 ? 'Confirm' : 'Next'}
           </StyledButton>

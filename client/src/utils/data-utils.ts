@@ -11,6 +11,24 @@ interface FlightReceived {
   travelClass?: string;
 }
 
+interface FlightBook {
+  goFlight:{
+    departure: string;
+    arrival: string;
+    departureDate: string;
+    returnDate: string;
+  };
+  backFlight?:{
+    departure: string;
+    arrival: string;
+    departureDate: string;
+    returnDate: string;
+  };
+  numberOfPassengers: number;
+  travelClass: string;
+  price: string;
+}
+
 
 export const getFligts = async (flightReceived: FlightReceived) => {
   
@@ -27,6 +45,12 @@ export const getFligts = async (flightReceived: FlightReceived) => {
     },
     }
     );
-  
-   
+};
+
+export const postFlights = async (flightDetails: FlightBook) => {
+  return await axios.post(`http://localhost:8000/flightBookings/create`, flightDetails);
+}
+
+export const postPassengers = async (passengers: any, flightBookingID: string) => {
+  return await axios.post(`http://localhost:8000/passengersInfo/create`, {passengers: passengers, flightBooking: flightBookingID});
 }
