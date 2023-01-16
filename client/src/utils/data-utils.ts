@@ -54,3 +54,11 @@ export const postFlights = async (flightDetails: FlightBook) => {
 export const postPassengers = async (passengers: any, flightBookingID: string) => {
   return await axios.post(`http://localhost:8000/passengersInfo/create`, {passengers: passengers, flightBooking: flightBookingID});
 }
+
+export const getFlightBooking = async (flightBookingID: string) => {
+  return await axios.get(`http://localhost:8000/flightBookings/get/${flightBookingID}`);
+}
+
+export const getPassengersByBookingId = async (flightBooking: string) => {
+  return await axios.get(`http://localhost:8000/passengersInfo/get/booking/${flightBooking}`);
+}

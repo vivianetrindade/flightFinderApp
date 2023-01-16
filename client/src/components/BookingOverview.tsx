@@ -3,6 +3,7 @@ import { Container2 } from './styles/Container.style';
 import { Flex, Flex3 } from './styles/Flex.style';
 import { StyledCard2 } from './styles/Card.style';
 
+
 function BookingOverview({passengerInfo, flightBook}: {passengerInfo: any, flightBook: any}) {
   return (
     <Container2>

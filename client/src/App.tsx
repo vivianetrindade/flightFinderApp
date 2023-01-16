@@ -5,6 +5,8 @@ import { GlobalStyle } from './components/styles/Global';
 import Header from './components/Header';
 import Form from './components/Form';
 import Booking from './pages/Booking';
+import Confirmation from './pages/Confirmation';
+import { getFlightBooking } from './utils/data-utils';
 
 const theme = {
   colors: {
@@ -34,7 +36,15 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root/>}>
         <Route index element={<Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>}/>
-        <Route path='/bookingInfo' element={<Booking/>}/>
+        <Route path='bookingInfo' element={<Booking/>}/>
+        <Route 
+          path='confirmation/:confirmationId' 
+          element={<Confirmation/>} 
+          loader={({params})=>{
+            return getFlightBooking(params.confirmationId!);
+          }}
+        />
+       
       </Route>
     )
   );

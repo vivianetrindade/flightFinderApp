@@ -52,27 +52,27 @@ app.use((req: Request, res: Response, next: any) => {
   });
 
   // routes
+  app.get('/', (req: Request, res: Response) => {
+    const flightDetails = req.query;
+  
+    amadeus.shopping.flightOffersSearch.get({
+      originLocationCode: flightDetails.originLocationCode,
+      destinationLocationCode: flightDetails.destinationLocationCode,
+      departureDate: flightDetails.departureDate,
+      returnDate: flightDetails.returnDate,
+      adults: flightDetails.adults,
+      children: flightDetails.children,
+      travelClass: flightDetails.travelClass,
+    }).then(function (response: any) {
+      res.send(response.data);
+    }).catch(function (responseError: any) {
+      console.log('Error', responseError.code);
+    }
+    );
+  });
 app.use('/flightBookings', flightBookingRoutes);
 app.use('/passengersInfo', passengersInfoRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  const flightDetails = req.query;
-
-  amadeus.shopping.flightOffersSearch.get({
-    originLocationCode: flightDetails.originLocationCode,
-    destinationLocationCode: flightDetails.destinationLocationCode,
-    departureDate: flightDetails.departureDate,
-    returnDate: flightDetails.returnDate,
-    adults: flightDetails.adults,
-    children: flightDetails.children,
-    travelClass: flightDetails.travelClass,
-  }).then(function (response: any) {
-    res.send(response.data);
-  }).catch(function (responseError: any) {
-    console.log('Error', responseError.code);
-  }
-  );
-});
 
 /*HealthCheck */
 app.get('/health', (req: Request, res: Response, next) => res.status(200).json({message:'check'}));

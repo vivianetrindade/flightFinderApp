@@ -7,6 +7,7 @@ import PassengerDetails from '../components/PassengerDetails';
 import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
 import { postFlights, postPassengers } from '../utils/data-utils';
+import { useNavigate } from 'react-router-dom';
 
 export interface PassengerInfo {
   firstName: string;
@@ -73,6 +74,7 @@ function Booking() {
     travelClass: '',
     price: '',
   });
+  const navigate = useNavigate();
 
   
   useEffect(() => {
@@ -120,9 +122,14 @@ function Booking() {
         postFlights(flightBook)
         .then((res) => {
           console.log(res.data, 'flights');
-          postPassengers(passengerInfo, res.data._id)
-          .then((res) => {
-            console.log(res.data, 'passengers');
+          return res.data
+          .then((res: any) => {
+            navigate('/confirmation', {state: {confirmationId: res._id}})
+            postPassengers(passengerInfo, res._id)
+            .then((res) => {
+              console.log(res.data, 'passengers');
+            }
+            )
           }
           )
         }).catch((err) => {
@@ -172,4 +179,4 @@ function Booking() {
   )
 }
 
-export default Booking
+export default Booking;
