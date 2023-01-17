@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from 'react';
-import { StyledCard, StyledTitle } from './styles/Card.style';
+import { StyledCard, StyledTitle, StyledLine } from './styles/Card.style';
 import { Flex2 } from './styles/Flex.style';
 import { StyledButton } from './styles/Button.style';
 import ModalComponent from './ModalComponent';
@@ -113,6 +113,7 @@ function Card({flight}: {flight: any}) {
                 )
               })
             }
+            <StyledLine />
             <h3>Back Flight</h3>
              {flightOptions && flightOptions.backFlights.map((segment:any) => {
                 return (
