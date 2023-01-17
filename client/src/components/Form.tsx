@@ -1,10 +1,10 @@
 import React from 'react';
-import { Container } from './styles/Container.style';
+import { Container, TitleContainer } from './styles/Container.style';
 import { StyledForm, StyledInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import { getFligts } from '../utils/data-utils';
 import Card from './Card';
-import data from '../data.json';
+// import data from '../data.json';
 
 interface FormProps {
   flightDetails: {
@@ -31,6 +31,7 @@ interface FormProps {
 function Form({flightDetails, setFlightDetails}: FormProps) {
   
   const [flightFound, setFlightFound] = React.useState<any>([])
+  const [loading, setLoading] = React.useState<boolean>(false);
  
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -42,11 +43,12 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   
+   setLoading(true);
     getFligts(flightDetails)
     .then((res: any) => {
       console.log(res.data)
       setFlightFound(res.data)
+      setLoading(false);
     }
     )
   }
@@ -77,9 +79,10 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
         <StyledButton type='submit'>Search</StyledButton>
 
       </StyledForm>
-
-      <h1>Flight Options</h1>
-      {flightFound && flightFound.map((flight: any) => {
+      <TitleContainer>
+        <h1>Flight Options</h1>
+      </TitleContainer>
+      {loading ? <h3>Loading...</h3> : flightFound.map((flight: any) => {
         return (
           <Card flight={flight} />
         )

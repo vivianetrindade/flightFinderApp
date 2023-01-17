@@ -26,8 +26,10 @@ export const Flex2 = styled.div`
 export const Flex3 = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin: 0 5rem;
   > * {
-    flex: 50%;
+    flex:30%;
   }
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: column;

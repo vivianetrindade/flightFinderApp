@@ -20,15 +20,17 @@ const getPassengersInfo = (req: Request, res: Response, next: NextFunction) => {
   const passengersInfoId = req.params.passengersInfoId;
 
   return PassengersInfo.findById(passengersInfoId)
+          .populate('flightBooking')
           .then((passengersInfo) => (passengersInfo ? res.status(200).json(passengersInfo) : res.status(404).json({message: "Passengers not found"})))
           .catch((error) => res.status(500).json({error}));
 }
 
 const getPassengersInfoByflightBooking = (req: Request, res: Response, next: NextFunction) => {
-  console.log('entrei no getPassengersInfoByflightBooking');
+  
   const flightBooking = req.params.flightBooking;
  
   return PassengersInfo.find({flightBooking})
+          .populate('flightBooking')
           .then((passengersInfo) => (passengersInfo ? res.status(200).json(passengersInfo) : res.status(404).json({message: "Passengers not found by flightBooking"})))
           .catch((error) => res.status(500).json({error}));
 }

@@ -94,7 +94,7 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
           return intineraries.segments.map((segment:any)=> {
             return(
               <>
-              <h4 >From: {segment.departure.iataCode} -- To: {segment.arrival.iataCode}</h4>
+              <h4 >From: {segment.departure.iataCode} {segment.departure.at} -- To: {segment.arrival.iataCode}</h4>
               </>
             )
           })
@@ -111,9 +111,9 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
         }
         )}
         </Flex2>
-        {/* <Link to='/bookingInfo'> */}
+       
         <StyledButton onClick={handleBooking}>Book now</StyledButton>
-        {/* </Link> */}
+        
       </Modal>
   )
 }

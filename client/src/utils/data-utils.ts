@@ -60,5 +60,5 @@ export const getFlightBooking = async (flightBookingID: string) => {
 }
 
 export const getPassengersByBookingId = async (flightBooking: string) => {
-  return await axios.get(`http://localhost:8000/passengersInfo/get/booking/${flightBooking}`);
+  return await axios.get(`http://localhost:8000/passengersInfo/get/${flightBooking}`);
 }

@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Form from './components/Form';
 import Booking from './pages/Booking';
 import Confirmation from './pages/Confirmation';
-import { getFlightBooking } from './utils/data-utils';
+import { getFlightBooking, getPassengersByBookingId } from './utils/data-utils';
 
 const theme = {
   colors: {
@@ -41,7 +41,7 @@ function App() {
           path='confirmation/:confirmationId' 
           element={<Confirmation/>} 
           loader={({params})=>{
-            return getFlightBooking(params.confirmationId!);
+            return getPassengersByBookingId(params.confirmationId!);
           }}
         />
        
