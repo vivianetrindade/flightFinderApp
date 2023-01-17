@@ -84,7 +84,9 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
       </TitleContainer>
       {loading ? <h3>Loading...</h3> : flightFound.map((flight: any) => {
         return (
-          <Card flight={flight} />
+          <div key={flight.id}>
+            <Card flight={flight} />
+          </div>
         )
       })
       }
