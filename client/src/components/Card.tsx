@@ -1,22 +1,53 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import { StyledCard, StyledTitle, StyledLine } from './styles/Card.style';
 import { Flex2 } from './styles/Flex.style';
 import { StyledButton } from './styles/Button.style';
 import ModalComponent from './ModalComponent';
 
+interface goFlights {
+  departureSegmentId: number;
+  departure: string;
+  departureDate: string;
+  arrival: string;
+  arrivalDate: string;
+  duration: string;
+}
+interface backFlights {
+  departureSegmentId: number;
+  departure: string;
+  departureDate: string;
+  arrival: string;
+  arrivalDate: string;
+  duration: string;
+}
+interface flightOptionsInterface {
+  id: string;
+  numberOfBookableSeats: number;
+  price: string;
+  goFlights: goFlights[];
+  backFlights?: backFlights[];
+  numberOfPassengers: number;
+}
 
 function Card({flight}: {flight: any}) {
-  let subtitle: any;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [flightOptions, setFlightOptions] = React.useState<any>();
+  
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [flightOptions, setFlightOptions] = useState<flightOptionsInterface>({
+    id: '',
+    numberOfBookableSeats: 0,
+    price: '',
+    goFlights: [] as goFlights[],
+    backFlights: [] as backFlights[],
+    numberOfPassengers: 0,
+  });
   
   useLayoutEffect(() => {
   const go = flight.itineraries[0]
   const back = flight.itineraries[1]
-  const goSegments: any = []
+  const goSegments: goFlights[] = []
   if (go.segments.length > 1) {
     for (let i = 0; i < go.segments.length; i++) {
-      const element = {
+      const element: goFlights = {
         departureSegmentId: i +1,  
         departure: go.segments[i].departure.iataCode,
         departureDate: go.segments[i].departure.at,
@@ -27,7 +58,7 @@ function Card({flight}: {flight: any}) {
       goSegments.push(element)
     } 
   } else {
-    const element = {
+    const element: goFlights = {
       departureSegmentId: 1,
       departure: go.segments[0].departure.iataCode,
       departureDate: go.segments[0].departure.at,
@@ -37,20 +68,20 @@ function Card({flight}: {flight: any}) {
     };
       goSegments.push(element)
     }
-  const backSegments: any = []
+  const backSegments: backFlights[] = []
   if (back.segments.length > 1) {
     for (let i = 0; i < back.segments.length; i++) {
-      const element = {
+      const element: backFlights = {
         departureSegmentId: i +1,
         departure: back.segments[i].departure.iataCode,
-        dapartureDate: back.segments[i].departure.at,
+        departureDate: back.segments[i].departure.at,
         arrival: back.segments[i].arrival.iataCode,
         arrivalDate: back.segments[i].arrival.at,
         duration: back.segments[i].duration,};
       backSegments.push(element)
     }
   } else {
-    const element = {
+    const element: backFlights = {
       departureSegmentId: 1,
       departure: back.segments[0].departure.iataCode,
       departureDate: back.segments[0].departure.at,
@@ -61,23 +92,20 @@ function Card({flight}: {flight: any}) {
       backSegments.push(element)
     }
     setFlightOptions( 
-      {
+     {
       id: flight.id,
       numberOfBookableSeats: flight.numberOfBookableSeats,
       price: flight.price.grandTotal + flight.price.currency,
       goFlights: goSegments,
       backFlights: backSegments,
+      numberOfPassengers: flight.travelerPricings.length
     }
-    )
+  )
   }, [])
   console.log('flight', flightOptions)
 
   const openModal = (id: string) => {
     setIsOpen(true);
-  }
-
-  const afterOpenModal = () => {
-    subtitle.style.color = '#f00';
   }
 
   const closeModal = () => {
@@ -115,7 +143,7 @@ function Card({flight}: {flight: any}) {
             }
             <StyledLine />
             <h3>Back Flight</h3>
-             {flightOptions && flightOptions.backFlights.map((segment:any) => {
+             {flightOptions && flightOptions.backFlights && flightOptions.backFlights.map((segment:any) => {
                 return (
                 <div key={segment.departureSegmentId}>
                 <Flex2>
@@ -143,7 +171,7 @@ function Card({flight}: {flight: any}) {
             
           </div>
     </StyledCard>
-    <ModalComponent modalIsOpen={modalIsOpen} closeModal={closeModal} afterOpenModal={afterOpenModal} flight={flight}/>
+    <ModalComponent modalIsOpen={modalIsOpen} closeModal={closeModal}  flight={flightOptions}/>
     
       </>
   )

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { StyledButton } from './styles/Button.style';
-import { Flex2 } from './styles/Flex.style';
+import { Flex2, Flex } from './styles/Flex.style';
+import { StyledCard2 } from './styles/Card.style';
 import { useNavigate } from 'react-router-dom';
 
 interface ModalComponentProps {
   modalIsOpen: boolean;
   closeModal: () => void;
-  afterOpenModal: () => void;
   flight: any;
 }
 
 const customStyles = {
   content: {
-    top: '40%',
+    top: '30%',
 
     background: '#ebfbff',
     height:'fit-content',
@@ -21,54 +21,28 @@ const customStyles = {
   },
 };
 
-function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: ModalComponentProps) {
+function ModalComponent({modalIsOpen, closeModal, flight}: ModalComponentProps) {
   const [selectedFlight, setSelectedFlight] = React.useState<any>(
     {
     id: '', 
-    itineraries: [
-      {
-        duration: '', 
-        segments: [
-          {
-            id: '', 
-            departure: 
-            {
-              iataCode: '', 
-              at: ''
-            },
-            arrival: 
-            {
-              iataCode:'', 
-              at: ''
-            }
-          }
-        ] 
-      }
-    ],
-     numberOfBookableSeats: 0, 
-     price: 
-     {
-      grandTotal: '',
-      currency: ''
-    }, 
-    travelerPricings: 
-    [
-      {
-        travelerType: '',
-        price: 
-        {
-          total: '',
-          currency: ''
-        }
-      }
-    ],
+    backFlights: [],
+    goFlights: [],
+    numberOfBookableSeats: 0,
+    price: '',
     numberOfPassengers: 0
   });
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    setSelectedFlight({...selectedFlight, id: flight.id, itineraries: flight.itineraries, numberOfBookableSeats: flight.numberOfBookableSeats, price: flight.price, travelerPricings: flight.travelerPricings, numberOfPassengers: flight.travelerPricings.length});
+    setSelectedFlight({
+      ...selectedFlight, 
+      id: flight.id, 
+      backFlights: flight.backFlights,
+      goFlights: flight.goFlights,
+      numberOfBookableSeats: flight.numberOfBookableSeats,
+      price: flight.price,
+      numberOfPassengers: flight.numberOfPassengers});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -80,40 +54,54 @@ function ModalComponent({modalIsOpen, closeModal, afterOpenModal, flight}: Modal
   return (
     <Modal
       isOpen={modalIsOpen}
-      onAfterOpen={afterOpenModal}
+      
       onRequestClose={closeModal}
       contentLabel="Example Modal"
       style={customStyles}
       appElement={document.getElementById('root') as HTMLElement}
       >
         
-        <button onClick={closeModal}>close</button>
-        <Flex2>
+        <StyledButton onClick={closeModal}>close</StyledButton>
+        
         {/* <h2>Itinerarie</h2> */}
-        {flight.itineraries.map((intineraries:any)=>{
-          return intineraries.segments.map((segment:any)=> {
-            return(
-              <>
-              <h4 >From: {segment.departure.iataCode} {segment.departure.at} -- To: {segment.arrival.iataCode}</h4>
-              </>
+        <Flex2>
+        <div>
+        {flight.goFlights.map((segment:any)=>{
+          return(
+            
+              <div key={segment.departureSegmentId}>
+              <h4 >From: {segment.departure} {segment.departureDate} -- To: {segment.arrival} {segment.arrivalDate}</h4>
+              </div>
+            
             )
-          })
-        }
-        )}
-        
-        <p>N of seats available: {flight.numberOfBookableSeats}</p>
-        {flight.travelerPricings.map((travelerPricing:any)=>{
-          return (
-            <>
-            <p>Price for {travelerPricing.travelerType}: {travelerPricing.price.total}{travelerPricing.price.currency}</p>
-            </>
-          )
-        }
-        )}
-        </Flex2>
-       
-        <StyledButton onClick={handleBooking}>Book now</StyledButton>
-        
+        })}
+        </div>
+        <div>
+        {flight.backFlights.map((segment:any)=>{
+          return(
+           
+              <div key={segment.id}>
+              <h4 >From: {segment.departure} {segment.departureDate} -- To: {segment.arrival} {segment.arrivalDate}</h4>
+              </div>
+            )
+          })}
+        </div>
+         </Flex2>
+        <Flex>
+          <StyledCard2>
+            <p>N of seats available: {flight.numberOfBookableSeats}</p>
+          </StyledCard2>
+          <StyledCard2>
+            <p>Number of passengers: {flight.numberOfPassengers}</p>
+          </StyledCard2>
+        </Flex>
+        <StyledCard2>
+            <h4>Total Price: {flight.price}</h4>
+        </StyledCard2>
+           
+      <StyledCard2>
+          <StyledButton onClick={handleBooking}>Book now</StyledButton>
+      </StyledCard2>
       </Modal>
   )
 }

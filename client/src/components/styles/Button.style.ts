@@ -8,7 +8,7 @@ export const StyledButton = styled.button<{ margin?: string }>`
   cursor: pointer;
   font-size: 1rem;
   font-weight: 700;
-  margin: 0.5rem 0.5rem 0.5rem ${({ margin }) => margin || '50rem'};
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
   padding: 0.5rem 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease-in-out;
