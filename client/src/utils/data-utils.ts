@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IflightOptions } from '../types/types';
 
 interface FlightReceived {
   trip: string;
@@ -47,7 +48,7 @@ export const getFligts = async (flightReceived: FlightReceived) => {
     );
 };
 
-export const postFlights = async (flightDetails: FlightBook) => {
+export const postFlights = async (flightDetails: IflightOptions) => {
   return await axios.post(`http://localhost:8000/flightBookings/create`, flightDetails);
 }
 

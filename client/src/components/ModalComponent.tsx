@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
 import { StyledButton } from './styles/Button.style';
 import { Flex2, Flex } from './styles/Flex.style';
 import { StyledCard2 } from './styles/Card.style';
 import { useNavigate } from 'react-router-dom';
-import { flightOptionsInterface } from './Card';
+import { IflightOptions } from '../types/types';
 
 interface ModalComponentProps {
   modalIsOpen: boolean;
   closeModal: () => void;
-  flight: flightOptionsInterface;
+  flight: IflightOptions;
 }
 
 const customStyles = {
@@ -23,33 +23,13 @@ const customStyles = {
 };
 
 function ModalComponent({modalIsOpen, closeModal, flight}: ModalComponentProps) {
-  const [selectedFlight, setSelectedFlight] = React.useState<flightOptionsInterface>(
-    {
-    id: '', 
-    backFlights: [],
-    goFlights: [],
-    numberOfBookableSeats: 0,
-    price: '',
-    numberOfPassengers: 0
-  });
+  
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    setSelectedFlight({
-      ...selectedFlight, 
-      id: flight.id, 
-      backFlights: flight.backFlights,
-      goFlights: flight.goFlights,
-      numberOfBookableSeats: flight.numberOfBookableSeats,
-      price: flight.price,
-      numberOfPassengers: flight.numberOfPassengers});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-
   const handleBooking = () => {
-    localStorage.setItem('selectedFlight', JSON.stringify(selectedFlight));
+    console.log(flight, 'selectedFlight');
+    localStorage.setItem('selectedFlight', JSON.stringify(flight));
     navigate('/bookingInfo');
   }
   return (
@@ -81,7 +61,7 @@ function ModalComponent({modalIsOpen, closeModal, flight}: ModalComponentProps) 
         {flight.backFlights && flight.backFlights.map((segment:any)=>{
           return(
            
-              <div key={segment.id}>
+              <div key={segment.departureSegmentId}>
               <h4 >From: {segment.departure} {segment.departureDate} -- To: {segment.arrival} {segment.arrivalDate}</h4>
               </div>
             )

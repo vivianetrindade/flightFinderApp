@@ -8,6 +8,7 @@ import FlightDetails from '../components/FlightDetails';
 import BookingOverview from '../components/BookingOverview';
 import { postFlights, postPassengers } from '../utils/data-utils';
 import { useNavigate } from 'react-router-dom';
+import { IflightOptions, IPassengerInfo } from '../types/types';
 
 export interface PassengerInfo {
   firstName: string;
@@ -43,7 +44,7 @@ export interface FlightBook {
 
 function Booking() {
   const [progress, setProgress] = useState(0);
-  const [passengerInfo, setPassengerInfo] = useState<PassengerInfo []>([
+  const [passengerInfo, setPassengerInfo] = useState<IPassengerInfo []>([
     {
       firstName: '',
       lastName: '',
@@ -57,28 +58,20 @@ function Booking() {
       id: 0,
     }
   ]);
-  const [flightBook, setFlightBook] = useState<FlightBook>({
-    goFlight:{
-      departure: '',
-      arrival: '',
-      departureDate: '',
-      returnDate: '',
-    },
-    backFlight:{
-      departure: '',
-      arrival: '',
-      departureDate: '',
-      returnDate: '',
-    },
+  const [flightBook, setFlightBook] = useState<IflightOptions>({
+    id: '', 
+    backFlights: [],
+    goFlights: [],
+    numberOfBookableSeats: 0,
+    price: '',
     numberOfPassengers: 0,
     travelClass: '',
-    price: '',
   });
   const navigate = useNavigate();
 
   
   useEffect(() => {
-    const selectedFlight = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
+    const selectedFlight:IflightOptions = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
     console.log(selectedFlight, 'selectedFlight');
     
     for (let i = 0; i < selectedFlight.numberOfPassengers; i++) {
@@ -98,22 +91,9 @@ function Booking() {
         },
       ]);
     }
-    setFlightBook({
-      goFlight:{
-        departure: selectedFlight.itineraries[0].segments[0].departure.iataCode,
-        arrival: selectedFlight.itineraries[0].segments[0].arrival.iataCode,
-        departureDate: selectedFlight.itineraries[0].segments[0].departure.at,
-        returnDate: selectedFlight.itineraries[1].segments[0].arrival.at,
-      },
-      backFlight:{
-        departure: selectedFlight.itineraries[1].segments[0].departure.iataCode,
-        arrival: selectedFlight.itineraries[1].segments[0].arrival.iataCode,
-        departureDate: selectedFlight.itineraries[1].segments[0].departure.at,
-        returnDate: selectedFlight.itineraries[1].segments[0].arrival.at,
-      },
-      numberOfPassengers: selectedFlight.numberOfPassengers,
-      travelClass: selectedFlight.travelerPricings[0].fareDetailsBySegment[0].cabin,
-      price: selectedFlight.price.grandTotal + selectedFlight.price.currency,})
+    setFlightBook(
+      selectedFlight)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   const handleClick = () => {

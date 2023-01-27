@@ -1,25 +1,34 @@
 import React from 'react';
-import { FlightBook } from '../pages/Booking';
 import { Container2 } from './styles/Container.style';
 import { Flex } from './styles/Flex.style';
 import { StyledCard2 } from './styles/Card.style';
+import { IflightOptions } from '../types/types';
 
 
 
-function FlightDetails({flightBook}: {flightBook: FlightBook}) {
+function FlightDetails({flightBook}: {flightBook: IflightOptions}) {
   return (
     <Container2>
       <Flex>
-        <StyledCard2>
-          <h3>{flightBook.goFlight.departure} --&gt; {flightBook.goFlight.arrival}</h3>
-          <p>Departure Date: {flightBook.goFlight.departureDate} </p>
-          <p>Return Date: {flightBook.goFlight.returnDate} </p>
+        {flightBook && flightBook.goFlights.map((segment: any) => {
+          return (
+            <StyledCard2 key={segment.departureSegmentId}>
+              <h3>{segment.departure} --&gt; {segment.arrival}</h3>
+              <p>Departure Date: {segment.departureDate} </p>
+              <p>Return Date: {segment.arrivalDate} </p>
         </StyledCard2>
-        <StyledCard2>
-          <h3>{flightBook.backFlight?.departure} --&gt; {flightBook.backFlight?.arrival}</h3>
-          <p>Departure Date: {flightBook.backFlight?.departureDate} </p>
-          <p>Return Date: {flightBook.backFlight?.returnDate} </p>
-        </StyledCard2>
+          )}
+        )}
+        {flightBook && flightBook.backFlights && flightBook.backFlights.map((segment: any) => {
+          return (
+          <StyledCard2 key={segment.departureSegmentId}>
+            <h3>{segment.departure} --&gt; {segment.arrival}</h3>
+            <p>Departure Date: {segment.departureDate} </p>
+            <p>Return Date: {segment.arrivalDate} </p>
+          </StyledCard2>
+          )
+        }
+        )}
       </Flex>
       <StyledCard2>
         <h4>Number of Passengers: {flightBook.numberOfPassengers}</h4>

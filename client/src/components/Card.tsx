@@ -3,51 +3,29 @@ import { StyledCard, StyledTitle, StyledLine } from './styles/Card.style';
 import { Flex2 } from './styles/Flex.style';
 import { StyledButton } from './styles/Button.style';
 import ModalComponent from './ModalComponent';
+import { IgoFlights, IbackFlights, IflightOptions } from '../types/types';
 
-interface goFlights {
-  departureSegmentId: number;
-  departure: string;
-  departureDate: string;
-  arrival: string;
-  arrivalDate: string;
-  duration: string;
-}
-interface backFlights {
-  departureSegmentId: number;
-  departure: string;
-  departureDate: string;
-  arrival: string;
-  arrivalDate: string;
-  duration: string;
-}
-export interface flightOptionsInterface {
-  id: string;
-  numberOfBookableSeats: number;
-  price: string;
-  goFlights: goFlights[];
-  backFlights?: backFlights[];
-  numberOfPassengers: number;
-}
 
 function Card({flight}: {flight: any}) {
   
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [flightOptions, setFlightOptions] = useState<flightOptionsInterface>({
+  const [flightOptions, setFlightOptions] = useState<IflightOptions>({
     id: '',
     numberOfBookableSeats: 0,
     price: '',
-    goFlights: [] as goFlights[],
-    backFlights: [] as backFlights[],
+    goFlights: [] as IgoFlights[],
+    backFlights: [] as IbackFlights[],
     numberOfPassengers: 0,
+    travelClass: '',
   });
   
   useLayoutEffect(() => {
   const go = flight.itineraries[0]
   const back = flight.itineraries[1]
-  const goSegments: goFlights[] = []
+  const goSegments: IgoFlights[] = []
   if (go.segments.length > 1) {
     for (let i = 0; i < go.segments.length; i++) {
-      const element: goFlights = {
+      const element: IgoFlights = {
         departureSegmentId: i +1,  
         departure: go.segments[i].departure.iataCode,
         departureDate: go.segments[i].departure.at,
@@ -58,7 +36,7 @@ function Card({flight}: {flight: any}) {
       goSegments.push(element)
     } 
   } else {
-    const element: goFlights = {
+    const element: IgoFlights = {
       departureSegmentId: 1,
       departure: go.segments[0].departure.iataCode,
       departureDate: go.segments[0].departure.at,
@@ -68,10 +46,10 @@ function Card({flight}: {flight: any}) {
     };
       goSegments.push(element)
     }
-  const backSegments: backFlights[] = []
+  const backSegments: IbackFlights[] = []
   if (back.segments.length > 1) {
     for (let i = 0; i < back.segments.length; i++) {
-      const element: backFlights = {
+      const element: IbackFlights = {
         departureSegmentId: i +1,
         departure: back.segments[i].departure.iataCode,
         departureDate: back.segments[i].departure.at,
@@ -81,7 +59,7 @@ function Card({flight}: {flight: any}) {
       backSegments.push(element)
     }
   } else {
-    const element: backFlights = {
+    const element: IbackFlights = {
       departureSegmentId: 1,
       departure: back.segments[0].departure.iataCode,
       departureDate: back.segments[0].departure.at,
@@ -98,7 +76,8 @@ function Card({flight}: {flight: any}) {
       price: flight.price.grandTotal + flight.price.currency,
       goFlights: goSegments,
       backFlights: backSegments,
-      numberOfPassengers: flight.travelerPricings.length
+      numberOfPassengers: flight.travelerPricings.length,
+      travelClass: flight.travelerPricings[0].fareDetailsBySegment[0].cabin,
     }
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps
