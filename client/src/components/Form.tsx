@@ -1,50 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, TitleContainer } from './styles/Container.style';
 import { StyledForm, StyledInput, StyledSelectInput, StyledDatePicker, StyledButton } from './styles/Form.style';
 import { Flex } from './styles/Flex.style';
 import { getFligts } from '../utils/data-utils';
 import Card from './Card';
+import { IflightSearch } from '../types/types';
 // import data from '../data.json';
 
-interface FormProps {
-  flightDetails: {
-    trip: string;
-    originLocationCode: string;
-    destinationLocationCode: string;
-    departureDate: Date;
-    returnDate?: Date;
-    adults: string;
-    children?: string;
-    travelClass?: string;
-  };
-  setFlightDetails: React.Dispatch<React.SetStateAction<{
-    trip: string;
-    originLocationCode: string;
-    destinationLocationCode: string;
-    departureDate: Date;
-    returnDate?: Date;
-    adults: string;
-    children?: string;
-    travelClass?: string;
-  }>>;
-  }
-function Form({flightDetails, setFlightDetails}: FormProps) {
+
+function Form() {
   
-  const [flightFound, setFlightFound] = React.useState<any>([])
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [flightSearch, setFlightSearch] = useState<IflightSearch>({
+    trip: 'one-way', 
+    originLocationCode: '',
+    destinationLocationCode: '',
+    departureDate: new Date(),
+    returnDate: new Date(),
+    adults: '0',
+    children: '0',
+    travelClass: ''
+  })
+  const [flightFound, setFlightFound] = useState<any>([])
+  const [loading, setLoading] = useState<boolean>(false);
  
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFlightDetails({...flightDetails, [name]: value})
+    setFlightSearch({...flightSearch, [name]: value})
   }
 
   const handleDateChanges = (date: Date, name: string) => {
-    setFlightDetails({...flightDetails, [name]: date})
+    setFlightSearch({...flightSearch, [name]: date})
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
    setLoading(true);
-    getFligts(flightDetails)
+    getFligts(flightSearch)
     .then((res: any) => {
       console.log(res.data)
       setFlightFound(res.data)
@@ -68,8 +58,8 @@ function Form({flightDetails, setFlightDetails}: FormProps) {
           <StyledSelectInput name='destinationLocationCode' id='destination' label='Destination'options={cityOptions} onChange={handleChanges}/>
         </Flex>
         <Flex>
-          <StyledDatePicker name='departureDate' title='Departure Date' onChange={handleDateChanges} date={flightDetails.departureDate}/>
-          <StyledDatePicker name='returnDate' title='Return Date' onChange={handleDateChanges} date={flightDetails.returnDate}/>
+          <StyledDatePicker name='departureDate' title='Departure Date' onChange={handleDateChanges} date={flightSearch.departureDate}/>
+          <StyledDatePicker name='returnDate' title='Return Date' onChange={handleDateChanges} date={flightSearch.returnDate}/>
         </Flex>
         <Flex>
           <StyledSelectInput name='adults' id='adults' label='Adults' options={[{value: '1', label: '1'}, {value: '2', label: '2'}, {value: '3', label: '3'}]} onChange={handleChanges}/>

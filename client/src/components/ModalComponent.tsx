@@ -4,11 +4,12 @@ import { StyledButton } from './styles/Button.style';
 import { Flex2, Flex } from './styles/Flex.style';
 import { StyledCard2 } from './styles/Card.style';
 import { useNavigate } from 'react-router-dom';
+import { flightOptionsInterface } from './Card';
 
 interface ModalComponentProps {
   modalIsOpen: boolean;
   closeModal: () => void;
-  flight: any;
+  flight: flightOptionsInterface;
 }
 
 const customStyles = {
@@ -22,7 +23,7 @@ const customStyles = {
 };
 
 function ModalComponent({modalIsOpen, closeModal, flight}: ModalComponentProps) {
-  const [selectedFlight, setSelectedFlight] = React.useState<any>(
+  const [selectedFlight, setSelectedFlight] = React.useState<flightOptionsInterface>(
     {
     id: '', 
     backFlights: [],
@@ -77,7 +78,7 @@ function ModalComponent({modalIsOpen, closeModal, flight}: ModalComponentProps) 
         })}
         </div>
         <div>
-        {flight.backFlights.map((segment:any)=>{
+        {flight.backFlights && flight.backFlights.map((segment:any)=>{
           return(
            
               <div key={segment.id}>

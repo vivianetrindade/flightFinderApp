@@ -20,7 +20,7 @@ interface backFlights {
   arrivalDate: string;
   duration: string;
 }
-interface flightOptionsInterface {
+export interface flightOptionsInterface {
   id: string;
   numberOfBookableSeats: number;
   price: string;
@@ -101,8 +101,8 @@ function Card({flight}: {flight: any}) {
       numberOfPassengers: flight.travelerPricings.length
     }
   )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log('flight', flightOptions)
 
   const openModal = (id: string) => {
     setIsOpen(true);

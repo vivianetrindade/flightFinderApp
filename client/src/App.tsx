@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Form from './components/Form';
 import Booking from './pages/Booking';
 import Confirmation from './pages/Confirmation';
-import { getFlightBooking, getPassengersByBookingId } from './utils/data-utils';
+import { getPassengersByBookingId } from './utils/data-utils';
 
 const theme = {
   colors: {
@@ -22,20 +22,11 @@ const theme = {
 };
 
 function App() {
-  const [flightDetails, setFlightDetails] = React.useState<any>(
-    {trip: 'one-way', 
-    originLocationCode: '',
-    destinationLocationCode: '',
-    departureDate: new Date(),
-    returnDate: new Date(),
-    adults: '0',
-    children: '0',
-    travelClass: ''}
-  )
+  
   const router = createRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root/>}>
-        <Route index element={<Form flightDetails={flightDetails} setFlightDetails={setFlightDetails}/>}/>
+        <Route index element={<Form />}/>
         <Route path='bookingInfo' element={<Booking/>}/>
         <Route 
           path='confirmation/:confirmationId' 
